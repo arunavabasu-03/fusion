@@ -1,3 +1,3 @@
 checklist 
-- [] Norm
-- [] Algos
+- [ ] Norm
+- [ ] Algos
