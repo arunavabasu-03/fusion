@@ -1,10 +1,15 @@
 mod normalization;
-use normalization::min_max::min_max_normalization;
-
+mod fusion;
+use fusion::rrf_kway_list::rrf_k_way;
 
 
 fn main() {
-    let scores = vec![10.0, 25.0, 5.0, 15.0, 20.0];
-    let normalized_scores = min_max_normalization(&scores);
-    println!("{:?}", normalized_scores);
+    let ranked_lists = vec![
+        vec!["A", "B", "C", "D"],
+        vec!["B", "D", "A", "E"],
+        vec!["C", "A", "D", "F"],
+    ];
+
+    let fused_ranking = rrf_k_way(&ranked_lists);
+    println!("Fused Ranking: {:?}", fused_ranking);
 }
