@@ -28,6 +28,10 @@ pub fn rrf_k_way<T: Eq + Hash + Clone>(ranked_lists: &[Vec<T>]) -> Vec<T> {
     sorted_docs.into_iter().map(|(doc, _)| doc).collect()
 }
 
-pub fn get_rank<T: Eq + Hash>(doc: &T, ranked_list: &[T]) -> Option<usize> {
+
+fn get_rank<T: Eq + Hash>(doc: &T, ranked_list: &[T]) -> Option<usize> {
     ranked_list.iter().position(|x| x == doc).map(|pos| pos + 1)
 }
+
+
+

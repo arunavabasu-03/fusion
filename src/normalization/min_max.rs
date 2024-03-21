@@ -1,8 +1,5 @@
 pub fn min_max_normalization(scores: &Vec<f64>) -> Vec<f64> {
-    /*
-    min max normalization algorithm
-    */
-    
+
     let min_value = scores.iter().cloned().fold(f64::MAX, f64::min);
     let max_value = scores.iter().cloned().fold(f64::MIN, f64::max);
 
