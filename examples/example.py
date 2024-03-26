@@ -1,19 +1,38 @@
-import fusion
-
-print(fusion.normalization.min_max_normalization([1.0, 2.0, 3.0]))
-
+from fusion import normalization as norm
+from tabulate import tabulate
 
 
+scores = [1.0, 2.0, 3.0]  
 
-ranked_lists = [["item1", "item2", "item3"], ["item2", "item1", "item3"]]
-result = fusion.normalization.max_norm_rank_fusion(ranked_lists)
-print(result)
+# Min Max Normalization
+min_max_norm = norm.min_max_normalization([1.0, 2.0, 3.0])
 
+# Max Norm Rank Fusion
+max_norm_rank_fusion = norm.max_norm(scores)
 
-
-scores = [1.0, 2.0, 3.0]  # Example scores (unused in the current function logic, but passed for consistency)
+# Borda norm
 ranks = [1, 2, 3]
 num_candidates = 3
+borda_norm = norm.borda_norm(scores,ranks, num_candidates)
 
-normalized_scores = fusion.normalization.borda_norm(scores, ranks, num_candidates)
-print(normalized_scores)
+# Rank Norm
+rank_norm = norm.rank_norm(ranks)
+
+# Sum Norm
+sum_norm = norm.sum_norm(ranks)
+
+# ZMUV Norm
+zmuv_norm = norm.zmuv_norm(ranks)
+
+# Prepare data for tabulation
+data = [
+    ["Min Max Normalization", min_max_norm],
+    ["Max Norm Rank Fusion", max_norm_rank_fusion],
+    ["Borda Norm", borda_norm],
+    ["Rank Norm", rank_norm],
+    ["Sum Norm", sum_norm],
+    ["ZMUV Norm", zmuv_norm]
+]
+
+# Print table
+print(tabulate(data, headers=["Normalization Method", "Result"], tablefmt="github"))
