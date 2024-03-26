@@ -1,4 +1,10 @@
-pub fn rank_norm(scores: &[f64], ranks: &[usize]) -> Vec<f64> {
+use pyo3::prelude::*;
+use pyo3::types::PyList;
+
+#[pyfunction]
+pub fn rank_norm(py: Python, ranks: &PyList) -> PyResult<Vec<f64>> {
+    // Extract ranks from PyList to Vec<usize>
+    let ranks: Vec<usize> = ranks.extract()?;
     let n = ranks.len();
     let mut normalized_scores = Vec::with_capacity(n);
 
@@ -7,6 +13,5 @@ pub fn rank_norm(scores: &[f64], ranks: &[usize]) -> Vec<f64> {
         normalized_scores.push(normalized_score);
     }
 
-    normalized_scores
+    Ok(normalized_scores)
 }
-

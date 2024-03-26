@@ -1,35 +1,28 @@
-use std::collections::{HashMap, HashSet};
-use core::hash::Hash;
-pub fn max_norm_rank_fusion<T: Eq + Hash + Clone>(ranked_lists: &[Vec<T>]) -> Vec<T> {
-    let num_lists = ranked_lists.len();
-    let mut item_ranks: HashMap<T, Vec<usize>> = HashMap::new();
-    let mut all_items: HashSet<T> = HashSet::new();
+use pyo3::prelude::*;
+use pyo3::types::PyList;
 
-    // Populate item_ranks and all_items
-    for (list_idx, ranked_list) in ranked_lists.iter().enumerate() {
-        for (rank, item) in ranked_list.iter().enumerate() {
-            item_ranks.entry(item.clone()).or_default().push(rank + 1);
-            all_items.insert(item.clone());
+/// Normalizes a list of scores by dividing each by the maximum score.
+#[pyfunction]
+pub fn max_norm(py: Python, scores: &PyList) -> PyResult<Vec<f64>> {
+    // Extract scores from PyList to Vec<f64>
+    let scores: Vec<f64> = scores.extract()?;
+    
+    // Find the maximum score in the list
+    let max_score = match scores.iter().max_by(|x, y| x.partial_cmp(y).unwrap()) {
+        Some(&max) => max,
+        None => {
+            // Handle empty list case by returning an empty Vec
+            return Ok(vec![]);
         }
+    };
+
+    // Check for a max score of 0 to prevent division by zero
+    if max_score == 0.0 {
+        return Ok(vec![0.0; scores.len()]);
     }
 
-    let mut fused_ranks: Vec<(T, f64)> = all_items
-        .into_iter()
-        .map(|item| {
-            let binding = Vec::new();
-            let ranks = item_ranks.get(&item).unwrap_or(&binding);
-            let max_rank = *ranks.iter().max().unwrap_or(&0) as f64;
-            let normalized_ranks: Vec<f64> = ranks
-                .iter()
-                .map(|rank| (*rank as f64) / max_rank)
-                .collect();
-            let fused_rank = normalized_ranks.iter().sum::<f64>() / (num_lists as f64);
-            (item, fused_rank)
-        })
-        .collect();
+    // Calculate max normalization for each score
+    let normalized_scores: Vec<f64> = scores.iter().map(|&s| s / max_score).collect();
 
-    fused_ranks.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap().then(ranked_lists.iter().flatten().position(|x| x == &a.0).cmp(&ranked_lists.iter().flatten().position(|x| x == &b.0))));
-
-    fused_ranks.into_iter().map(|x| x.0).collect()
+    Ok(normalized_scores)
 }
-
