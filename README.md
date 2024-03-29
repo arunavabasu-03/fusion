@@ -1,9 +1,9 @@
 ## **Fusion**
 
-📦 This is aims to implements **Fusion Algorithms** and the **Normalisation Algorithms** - 
+📦 This repo  is aims to implements **Fusion Algorithms** and the **Normalisation Algorithms** . 
 
 
-📖 **Normalisations Algos**  - 
+📖 **Normalisations Algos**   
 
 ```
 | Normalization Method   | Result                                         |
@@ -19,7 +19,7 @@ python3 examples/example.py  0.02s user 0.01s system 42% cpu 0.083 total
 ```
 
 
-📖 **Checklists** -
+📖 **Checklists** 
 
 |  Fusion Algorithms | Status |         
 |------------|------------|
