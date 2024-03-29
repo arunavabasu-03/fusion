@@ -5,6 +5,16 @@
 
 📖 **Normalisations Algos**   
 
+📖  Steps 
+```bash 
+# builds the package and install locally 
+maturin develop
+
+# run the example python implementation
+python3 examples/example.py
+```
+
+
 ```
 | Normalization Method   | Result                                         |
 |------------------------|------------------------------------------------|
