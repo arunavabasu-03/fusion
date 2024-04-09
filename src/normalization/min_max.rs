@@ -1,7 +1,7 @@
 use pyo3::prelude::*;
 
 #[pyfunction]
-pub fn min_max_normalization(scores: Vec<f64>) -> PyResult<Vec<f64>> {
+pub fn min_max_norm(scores: Vec<f64>) -> PyResult<Vec<f64>> {
     let min_value = scores.iter().cloned().fold(f64::MAX, f64::min);
     let max_value = scores.iter().cloned().fold(f64::MIN, f64::max);
 
