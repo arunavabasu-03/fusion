@@ -8,8 +8,9 @@ scores = [1.0, 2.0, 3.0]
 min_max_norm = norm.min_max_normalization([1.0, 2.0, 3.0])
 
 # Max Norm Rank Fusion
-max_norm_rank_fusion = norm.max_norm(scores)
+max_norm_rank_fusion = norm.max.max_norm(
 
+)
 # Borda norm
 ranks = [1, 2, 3]
 num_candidates = 3
